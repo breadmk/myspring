@@ -1,0 +1,9 @@
+package org.zerock.board.vo;
+
+import lombok.Data;
+
+@Data
+public class DataVO {
+	private String name;
+	private int age;
+}
