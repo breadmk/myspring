@@ -5,8 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.co.mk.vo.GoodsViewVo;
-import kr.co.mk.vo.ReplyListVo;
-import kr.co.mk.vo.ReplyVo;
 
 public interface ShopDAO {
 	
@@ -19,5 +17,5 @@ public interface ShopDAO {
 	//상품 댓글 입력
 	public void replyInsert(int gdsNum,String userId, String repCon);
 	//상품 댓글 목록
-	public List<ReplyListVo> replyList(int no);
+	public List replyList(int no);
 }

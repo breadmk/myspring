@@ -23,7 +23,7 @@
 	
 	<context:component-scan base-package="kr.co.kurly" />
 	
-	<!-- DB 접속정보 -->
+		<!-- DB 접속정보 -->
 	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<beans:property name="url" value="jdbc:mysql://localhost:3306/kurly" />

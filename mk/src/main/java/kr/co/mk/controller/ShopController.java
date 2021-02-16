@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.mk.dao.ShopDAO;
 import kr.co.mk.vo.GoodsViewVo;
 import kr.co.mk.vo.MemberVo;
-import kr.co.mk.vo.ReplyListVo;
-import kr.co.mk.vo.ReplyVo;
 
 @Controller
 @RequestMapping("/shop/**")

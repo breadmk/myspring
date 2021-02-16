@@ -12,6 +12,19 @@
 <link rel="stylesheet" href="../resources/main.css">
  <script src="../resources/main.js"></script>
 <script type="text/javascript">
+//택배 <=> 샛별 변하기
+/* window.onload=function()
+{
+	    var ck=0;
+  	setInterval(function() //setInterval(함수,초) => 함수 => function(){기능정의};
+  	{
+  		if(ck%2 == 0)
+  			document.getElementById("first_in").innerHTML="서울·경기·인천 &nbsp;<b style='color:purple'>샛별배송  </b>";
+  		else
+  			document.getElementById("first_in").innerHTML="수도권 이외지역 &nbsp;<b style='color:purple'>택배배송  </b>";
+  		ck++;
+  	},2000);
+} */
 $(function()
 		  {
 			var ck=0;
