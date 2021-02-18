@@ -13,4 +13,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from jung where deacode = #{param1} order by code asc
 	</select>
 	
+	<select id="get_MaxPcode" resultType="Integer">
+		select ifnull(right(max(pcode),4),0) 
+			from product where pcode like
+				concat('%',#{param1},'%')
+	</select>
+ <insert id="pwrite_ok" parameterType="kr.co.kurly.dto.ProductDto">
+   insert into product(mimg,title,subtitle,price,pdan,pwe,bgubun,made,pal,gihan,
+   su,pcon,pimg,pinfo,halin,writeday,pcode)
+   values(#{mimg},#{title},#{subtitle},#{price},#{pdan},#{pwe},#{bgubun},#{made},
+   #{pal},#{gihan},#{su},#{pcon},#{pimg},#{pinfo},#{halin},now(),#{pcode})
+ </insert>
+ 
 </mapper>

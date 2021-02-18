@@ -1,9 +1,18 @@
 package kr.co.kurly.dto;
 
 public class ProductDto {
-	
-	private int id,price,bgubun,gihan,su,halin;
-	private String ming,title,subtitle,pdan,pwe,made,pal,pcon,pimg,pinfo,writeday;
+    private int id,price,bgubun,gihan,su,halin;
+    private String mimg,title,subtitle,pdan,pwe;
+    private String made,pal,pcon,pimg,pinfo,writeday,pcode;
+    
+    
+    
+	public String getPcode() {
+		return pcode;
+	}
+	public void setPcode(String pcode) {
+		this.pcode = pcode;
+	}
 	public int getId() {
 		return id;
 	}
@@ -40,11 +49,11 @@ public class ProductDto {
 	public void setHalin(int halin) {
 		this.halin = halin;
 	}
-	public String getMing() {
-		return ming;
+	public String getMimg() {
+		return mimg;
 	}
-	public void setMing(String ming) {
-		this.ming = ming;
+	public void setMimg(String mimg) {
+		this.mimg = mimg;
 	}
 	public String getTitle() {
 		return title;
@@ -106,16 +115,13 @@ public class ProductDto {
 	public void setWriteday(String writeday) {
 		this.writeday = writeday;
 	}
-	
 	@Override
 	public String toString() {
 		return "ProductDto [id=" + id + ", price=" + price + ", bgubun=" + bgubun + ", gihan=" + gihan + ", su=" + su
-				+ ", halin=" + halin + ", ming=" + ming + ", title=" + title + ", subtitle=" + subtitle + ", pdan="
+				+ ", halin=" + halin + ", mimg=" + mimg + ", title=" + title + ", subtitle=" + subtitle + ", pdan="
 				+ pdan + ", pwe=" + pwe + ", made=" + made + ", pal=" + pal + ", pcon=" + pcon + ", pimg=" + pimg
-				+ ", pinfo=" + pinfo + ", writeday=" + writeday + "]";
+				+ ", pinfo=" + pinfo + ", writeday=" + writeday + ", pcode=" + pcode + "]";
 	}
-	
-	
-	
-	
+    
+    
 }

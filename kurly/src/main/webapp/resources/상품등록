@@ -42,6 +42,7 @@ pinfo varchar(50),
 halin int default 0,
 writeday date
 );
+alter table product add pcode char(9);
 
 write => 상품등록폼
 write_ok => 저장
@@ -110,5 +111,34 @@ encode,decode
 
 replace("%2F","/") => 쌀/잡곡%2F옥수수
 replace("%2F/g","/") => 쌀/잡곡/옥수수
+
+menu.length => 15-1 / 2 =>7  // 배열은 우리가 생각하는거보다 숫자가 1개 높으니까 -1
+jnum = menu.length/2;
+code => 0 ~ 6
+title => 7~13
+
+jnum = 
+
+pcode
+insert into product(pcode) values('p01030001');
+
+가장 큰 pcode 구하기 
+// 가장 높은 p0101 을 가져와서 오른쪽으로부터 4자리 구하는 함수.
+select right(max(pcode),4) from product where pcode like 'p0101%';
+// 가장 높은 p0102 을 가져왔는데 없다면 0으로 삽입 / 오른쪽으로부터 4자리 구하는 함수.
+select ifnull(right(max(pcode),4),0) from product where pcode like 'p0101%';
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
