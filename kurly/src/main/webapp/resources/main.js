@@ -11,6 +11,25 @@
 	  $("#first").slideUp(1000);
   }
 
+//전체카테고리 부분
+  function view_main()
+  {
+  	document.getElementById("main_submenu").style.visibility="visible";
+  }
+  function hide_main()
+  {
+  	document.getElementById("main_submenu").style.visibility="hidden";
+  }
+
+  function view_inner(n)
+  {
+      document.getElementsByClassName("inner_menu")[n].style.visibility="visible";	
+  }
+  function hide_inner(n)
+  {
+      document.getElementsByClassName("inner_menu")[n].style.visibility="hidden";	
+  }
+  
   function id_chk() {
 		$.ajax({
 			url:"/kurly/member/member/id_ok",

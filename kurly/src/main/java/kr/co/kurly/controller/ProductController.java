@@ -3,6 +3,7 @@ package kr.co.kurly.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,7 +81,7 @@ public class ProductController {
 		pcode = pcode+num2;
 		System.out.println(pcode);
 		// request된 값을 dto클래스에 setter하기
-		pdto.setPcode(multi.getParameter("pcode"));
+		pdto.setPcode(pcode);
 		pdto.setTitle(multi.getParameter("title"));
 		pdto.setSubtitle(multi.getParameter("subtitle"));
 		pdto.setPrice(Integer.parseInt(multi.getParameter("price")));
@@ -95,9 +96,19 @@ public class ProductController {
 		pdto.setPcon(multi.getFilesystemName("pcon"));
 		pdto.setPimg(multi.getFilesystemName("pimg"));
 		pdto.setPinfo(multi.getFilesystemName("pinfo"));
-		
 		pdao.pwrite_ok(pdto);
 		return "redirect:/product/pwrite";
+	}
+	@RequestMapping("/product/pro_list")
+	public String pro_list(Model model,HttpServletRequest request)
+	{
+		ProductDao pdao=sqlSession.getMapper(ProductDao.class);
+        String pcode=request.getParameter("pcode");
+        System.out.println(pcode);
+        List<ProductDto> list=pdao.get_pro_list(pcode);
+        System.out.println(list);
+        model.addAttribute("list",list);
+		return "/product/pro_list";
 	}
 }
 

@@ -12,4 +12,5 @@ public interface ProductDao {
 	public List<JungDto> get_jung(String deacode);
 	public Integer get_MaxPcode(String pcode);
 	public void pwrite_ok(ProductDto pdto);
+	public List<ProductDto> get_pro_list(String pcode);
 }

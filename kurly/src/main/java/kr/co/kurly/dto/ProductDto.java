@@ -4,15 +4,6 @@ public class ProductDto {
     private int id,price,bgubun,gihan,su,halin;
     private String mimg,title,subtitle,pdan,pwe;
     private String made,pal,pcon,pimg,pinfo,writeday,pcode;
-    
-    
-    
-	public String getPcode() {
-		return pcode;
-	}
-	public void setPcode(String pcode) {
-		this.pcode = pcode;
-	}
 	public int getId() {
 		return id;
 	}
@@ -115,6 +106,12 @@ public class ProductDto {
 	public void setWriteday(String writeday) {
 		this.writeday = writeday;
 	}
+	public String getPcode() {
+		return pcode;
+	}
+	public void setPcode(String pcode) {
+		this.pcode = pcode;
+	}
 	@Override
 	public String toString() {
 		return "ProductDto [id=" + id + ", price=" + price + ", bgubun=" + bgubun + ", gihan=" + gihan + ", su=" + su
@@ -122,6 +119,7 @@ public class ProductDto {
 				+ pdan + ", pwe=" + pwe + ", made=" + made + ", pal=" + pal + ", pcon=" + pcon + ", pimg=" + pimg
 				+ ", pinfo=" + pinfo + ", writeday=" + writeday + ", pcode=" + pcode + "]";
 	}
+    
     
     
 }
