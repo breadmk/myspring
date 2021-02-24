@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.eclipse.jdt.internal.compiler.ast.ReturnStatement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,7 +47,13 @@ public class QnaController {
 	public String questionDelete(int qnno) {
 		System.out.println(qnno);
 		qnaMapper.delete(qnno);
-//		return "";
 		return "redirect:/shop/qna";
+	}
+	
+	@RequestMapping("/shop/qnaUpdate")
+	public String qnaUpdate(QnaDTO dto,Model model,int qnno) {
+		System.out.println(qnno);
+		
+		return "/front/shop/qna/qnaUpdate";
 	}
 }

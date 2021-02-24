@@ -311,9 +311,10 @@ width:800px;}
 <c:forEach var="list" items="${list}">
 <tr class="qna">
 <td id="td1">
+<%-- <input type="hidden" value="${list.qnno}" class="td1"> --%>
 ${list.qnno}
 </td>
-<td>
+<td id="td3">
 ${list.ctno}
 </td>
 <td>
@@ -329,8 +330,8 @@ ${list.name}
 </tr>
 <tr class="answer" >
 <td colspan="5">${list.content}
-	<button class="update">수정</button>
-	<button class="delete">삭제</button>
+	<button class="update"><a href="qnaUpdate?qnno=${list.qnno}">수정</a></button>
+	<button class="delete"><a href="qnaDelete?qnno=${list.qnno}">삭제</a></button>
 </td>
 </tr>
  </c:forEach>

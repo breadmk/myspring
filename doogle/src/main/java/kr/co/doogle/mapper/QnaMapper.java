@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.type.JdbcType;
 
 import kr.co.doogle.dto.QnaDTO;
@@ -35,5 +36,9 @@ public interface QnaMapper {
 	
 	@Delete("delete from qna where qnno=#{param1}")
 	int delete(int qnno);
+	
+	@Update("update qna set ono=#{ono},title=#{title},content=#{content},ctno=#{ctno},email=#{email}, " +
+			" email_yn=#{email_yn},phone=#{phone},phone_yn={#phone_yn},fno=#{fno} where qnno=#{qnno}")
+	int update(QnaDTO dto);
 	
 }
