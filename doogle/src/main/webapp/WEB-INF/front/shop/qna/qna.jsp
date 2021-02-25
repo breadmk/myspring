@@ -4,9 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%--     <%@include file="../navbar.jsp"%> --%>
 <style>
-a:visited { text-decoration: none;}
-a:hover { text-decoration: none;}
-a:link { text-decoration: none;}
 .xans-board-listheader {
     border-top: 2px solid #522772;
     font-size: 13px;

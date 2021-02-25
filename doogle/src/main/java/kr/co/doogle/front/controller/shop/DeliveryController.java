@@ -1,13 +1,18 @@
 package kr.co.doogle.front.controller.shop;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.co.doogle.dto.DeliveryDTO;
+import kr.co.doogle.mapper.DeliveryMapper;
+
 @Controller
 public class DeliveryController {
+	@Autowired
+	DeliveryMapper deliveryMapper;
 	
-
 	@RequestMapping("/shop/deliveryList")
 	public String deliveryList(Model model) {
 		model.addAttribute("url", "/shop/deliveryList");
@@ -21,8 +26,8 @@ public class DeliveryController {
 	}
 	
 	@RequestMapping("/delivery_ok")
-	public String delivery_ok() {
-		
+	public String delivery_ok(DeliveryDTO dto) {
+		deliveryMapper.insert(dto);
 		return "/front/shop/delivery/list";
 	}
 }

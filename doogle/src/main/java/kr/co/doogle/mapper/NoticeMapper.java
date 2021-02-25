@@ -46,11 +46,13 @@ public interface NoticeMapper {
 	@Delete("delete from notice where nNo=#{param1}")
 	int delete(@Param("no") int no);
 	
-//    @Select({"<script>",
-//      "select notice from ",
-//      "    <if test='word !=null and word !='"+"''"+".toString>"+"where(2=1",
-//      "    <if test='key == "+"t"+".toString()'> or title like '%'||#{word}||'%')</if>",
-//      "  )</if>",
-//      "</script>"})
-//    List<NoticeDTO> lista(PageObject pageObject);
+	//연습
+//  @Select({"<script>",
+//  "select notice from ",
+//  "    <if test='word !=null and word !='"+"''"+".toString>"+"where(2=1",
+//  "    <if test='key == "+"t"+".toString()'> or title like '%'||#{word}||'%')</if>",
+//  "  )</if>",
+//  "</script>"})
+//List<NoticeDTO> lista(PageObject pageObject);
+	
 }

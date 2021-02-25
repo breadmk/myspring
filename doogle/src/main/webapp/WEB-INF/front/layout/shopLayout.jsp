@@ -21,13 +21,12 @@
 <c:if test="${edit eq 'edit'}"><script defer type="text/javascript" src="/static/core/js/summernote-ko-KR.min.js"></script></c:if>
 <c:if test="${edit eq 'edit'}"><script defer type="text/javascript" src="/static/front/js/edit.js"></script></c:if>
 <c:if test="${url eq '/shop/product/form'}"><script defer type="text/javascript" src="/static/front/js/form.js"></script></c:if>
-<c:if test="${url eq '/shop/deliveryList'}"><script defer type="text/javascript" src="/static/front/js/delivery.js"></script></c:if>
 <c:if test="${url eq '/notice_insert'}"><script defer type="text/javascript" src="/static/front/js/notice_insert.js"></script></c:if>
 <c:if test="${url eq '/notice_update'}"><script defer type="text/javascript" src="/static/front/js/notice_update.js"></script></c:if>
 <c:if test="${url eq '/qnaRegister'}"><script defer type="text/javascript" src="/static/front/js/qnaRegister.js"></script></c:if>
 <c:if test="${url eq '/questionRegister'}"><script defer type="text/javascript" src="/static/front/js/questionRegister.js"></script></c:if>
 <c:if test="${url eq '/questionUpdate'}"><script defer type="text/javascript" src="/static/front/js/questionUpdate.js"></script></c:if>
-
+<c:if test="${url eq '/shop/deliveryList'}"><script defer type="text/javascript" src="/static/front/js/delivery.js"></script></c:if>
 <sitemesh:write property="head" /></head>
 </head>
 <body>

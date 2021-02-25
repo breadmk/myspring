@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.doogle.dto.TestDTO;
-import kr.co.doogle.mapper.BasketMapper;
 import kr.co.doogle.mapper.TestMapper;
 
 @Controller
@@ -16,13 +15,6 @@ public class TestController {
 
 	@Autowired
 	private TestMapper testMapper;
-	@Autowired
-	private BasketMapper basketMapper;
-	
-	@RequestMapping("/shop/basket/test")
-	public void test(PrintWriter out) {
-		out.print(basketMapper.getBasketProduct());
-	}
 
 	@RequestMapping("/test")
 	public ModelAndView test(ModelAndView mv) {
