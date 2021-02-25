@@ -11,7 +11,7 @@ table {
 <script src="/static/front/js/notice_insert.js"></script>
 <div class="container">
 <h3>공지사항 작성</h3>
-<form action="notice_insert_ok" method="post">
+<form action="/shop/notice_insert_ok" method="post">
 <table border="1">
 <tr>
 	<td>작성자<input type="text" name="name"></td>

@@ -1131,7 +1131,6 @@ CREATE TABLE notice (
 	title VARCHAR2(500) NOT NULL, /* 제목 */
 	content CLOB NOT NULL, /* 내용 */
 	name VARCHAR2(30) DEFAULT '관리자' NOT NULL, /* 작성자 */
-	state NUMBER DEFAULT 0 NOT NULL,
 	read_cnt NUMBER DEFAULT 0 NOT NULL, /* 조회수 */
 	type CHAR(1) DEFAULT 'y' NOT NULL, /* 노출여부 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */

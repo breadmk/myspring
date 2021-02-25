@@ -4,6 +4,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
 	.table{text-align: center;}
 	 h3{text-align: center;}
@@ -11,8 +12,9 @@
 <script>
 	opener.parent.location.reload();
 </script>
+<script src="/static/front/js/deliveryPop.js"></script>
 <h3>샛별 배송 Doogle과 함께</h3>
-<form class="form-inline" action="delivery_ok" method="post">
+<form id="mk" class="form-inline" action="#" method="post">
 <table class="table">
 <tr class="info">
 	<td><label for="id">아이디</label></td>
@@ -20,7 +22,7 @@
 </tr>
 <tr class="info">
 <td><label for="name">이름</label></td>
-<td><input type="text" name="name" placeholder="이름" class="input" value="session.name"/></td>
+<td><input type="text" id="name" name="name" placeholder="이름" class="input" value="session.name"/></td>
 </tr>
 <tr class="info">
 	<td> <label for="phone">연락처</label></td>
@@ -28,22 +30,23 @@
 </tr>
 <tr class="info">
 	<td><label for="zipcode">우편번호</label></td>
-	<td><input type="text" name="zipcode" placeholder="우편번호" class="input" disabled="disabled" value="${param.zipNo }"/></td>
+	<td><input type="text" name="zipcode" placeholder="우편번호" class="input" value="${param.zipNo }"/></td>
 </tr>
 <tr class="info">
 	<td><label for="addr">주소</label></td>
-	<td><input type="text" name="addr" placeholder="주소" class="input" disabled="disabled" value="${param.roadAddrPart1 }"/></td>
+	<td><input type="text" name="addr" placeholder="주소" class="input" value="${param.roadAddrPart1 }"/></td>
 </tr>	
 <tr class="info">
 	<td><label for="addr_detail">상세주소</label></td>
-	<td><input type="text" name="addr_detail" placeholder="상세주소" class="input" disabled="disabled" value="${param.addrDetail }" /></td>
+	<td><input type="text" name="addr_detail" placeholder="상세주소" class="input"  value="${param.addrDetail }" /></td>
 </tr>
 <tr class="info">
 	<td> <label for="email">이메일</label></td>
 	<td><input type="text" name="email" placeholder="이메일" class="input" value="session.email" /></td>
 </tr>
 <tr class="info">
-	<td colspan="2" align="center"><input type="submit" value="저장하기" title="저장하기" alt="저장하기" class="btn2 active" /></td>
+		<td colspan="2"><button onclick="ajaxd()">제출</button></td>
+<!-- 	<td colspan="2" align="center"><input type="submit" value="저장하기" title="저장하기" alt="저장하기" class="btn2 active" /></td> -->
 </tr>	
 </table>
 </form>

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class DeliveryController {
+	
 
 	@RequestMapping("/shop/deliveryList")
 	public String deliveryList(Model model) {
@@ -17,5 +18,11 @@ public class DeliveryController {
 	public String delivery_pop() {
 		
 		return "/front/shop/delivery/delivery_pop";
+	}
+	
+	@RequestMapping("/delivery_ok")
+	public String delivery_ok() {
+		
+		return "/front/shop/delivery/list";
 	}
 }

@@ -29,7 +29,7 @@ function jusoCallBack(roadAddrPart1, addrDetail, zipNo, func = null) {
 		data2 = roadAddrPart1;
 		data3 = addrDetail;
 		openWin=window.open("/delivery_pop?zipNo="+data1+"&roadAddrPart1="+data2+"&addrDetail="+data3,"",'width=800,height=430',"_black");
-		window.close();
+//		window.opener.location.reload();
 		//addr.value = roadAddrPart1;
 		//addr_detail.value = addrDetail;
 		//zipcode.value = zipNo;	

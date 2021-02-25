@@ -167,7 +167,6 @@
 }
 
 .xans-board-listheader p.ordno {
-    text-decoration: underline;
     letter-spacing: .2px
 }
 
@@ -478,7 +477,11 @@ width:800px;}
 #page{
 	text-align: center;
 }
+a:visited { text-decoration: none;}
+a:hover { text-decoration: none;}
+a:link { text-decoration: none;}
 </style>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -517,7 +520,7 @@ width:800px;}
 <c:forEach items="${list}" var="list">
 <c:if test="${list.type eq 'y'}">
 <tr class="qna">
-<td id="td1">${list.qno}</td>
+<td class="td1">${list.qno}</td>
 <c:if test="${list.ctno==1}">
 <td id="td1">회원문의</td>
 </c:if>
@@ -541,8 +544,8 @@ width:800px;}
 <tr class="qna_answer">
 	<td colspan="5">${list.content}</td>
 	<td>
-   <button type="button" class="update">수정</button>
-   <button type="button" class="delete">삭제</button>
+   <button type="button" class="update"><a href="questionUpdate?qno=${list.qno}">수정</a></button>
+   <button type="button" class="delete"><a href="questionDelete?qno=${list.qno}">삭제</a></button>
   	</td>
 </tr>
 </c:if>
