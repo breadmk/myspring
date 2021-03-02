@@ -12,6 +12,7 @@ public class SiteMeshConfig extends ConfigurableSiteMeshFilter {
 		.addDecoratorPath("/shop*", "/WEB-INF/front/layout/shopLayout.jsp")
 		.addDecoratorPath("/jusoPopup", null)
 		.addDecoratorPath("/delivery_pop", null)
+		.addDecoratorPath("/deliveryUpdate", null)
 //		.addExcludedPath("/html/*")
 //		.addExcludedPath(".json")
 		.setMimeTypes("text/html");

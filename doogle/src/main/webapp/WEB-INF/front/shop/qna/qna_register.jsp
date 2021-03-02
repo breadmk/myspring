@@ -420,17 +420,17 @@
 <th class="input_txt">제목</th>
 <td><select name="ctno" required="" fld_esssential="" label="질문유형" class="select">
 <option value="">선택해주세요.</option>
-<option value="01">배송지연/불만</option>
-<option value="11">컬리패스 (무료배송)</option>
-<option value="02">반품문의</option>
-<option value="03">A/S문의</option>
-<option value="06">환불문의</option>
-<option value="07">주문결제문의</option>
-<option value="08">회원정보문의</option>
-<option value="04">취소문의</option>
-<option value="05">교환문의</option>
-<option value="09">상품정보문의</option>
-<option value="10">기타문의</option>
+<option value="223">배송지연/불만</option>
+<option value="224">컬리패스 (무료배송)</option>
+<option value="225">반품문의</option>
+<option value="226">A/S문의</option>
+<option value="227">환불문의</option>
+<option value="228">주문결제문의</option>
+<option value="229">회원정보문의</option>
+<option value="230">취소문의</option>
+<option value="230">교환문의</option>
+<option value="231">상품정보문의</option>
+<option value="233">기타문의</option>
 </select><br>
 <input type="text" name="title" style="width:100%" required="" fld_esssential="" label="제목" value="">
 </td>
