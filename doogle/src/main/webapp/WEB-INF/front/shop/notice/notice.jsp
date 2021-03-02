@@ -426,66 +426,25 @@ text-align: left;
 </tbody>
 </table>
 <div id="page">
-<c:if test="${pageObject.totalPage > 1 }">
+<%-- <c:if test="${pageObject.totalPage > 1 }"> --%>
 		<tr>
 			<td>
-			 <pageNav:pageNav listURI="notice" pageObject="${pageObject}" />
+			<ul class="pagination justify-content-center" id="pageWrap">${paging}</ul>
 			</td>
 		</tr>
-	</c:if>
+<%-- 	</c:if> --%>
 </div>
 </div>
+<form>
 <table class="xans-board-search xans-board-search2">
-<tbody><tr>
-<td class="input_txt"><img src="/static/front/img/search1.jpg">검색어</td>
-<td class="stxt">
-<input type="checkbox" name="search[name]">이름
-<input type="checkbox" name="search[subject]">제목
-<input type="checkbox" name="search[contents]">내용&nbsp;
-</td>
-<td class="input_txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<tr>
 <td>
-<div class="search_bt">
-<a href="javascript:document.frmList.submit()"><img src="/static/front/img/search.jpg" align="right"></a>
-<input type="text" name="search[word]" value="" required="">
-</div>
+	<select id="search" action="/shop/notice">
+		<option value="">제목</option>
+	</select>
+	<input type="text" name="title">
 </td>
 </tr>
-</tbody></table>
-<!-- 검색을 위한 태그 시작 -->
-<div>
-  <form class="navbar-form">
-    <div class="input-group">
-     <div class="form-group navbar-left">
-      <select name="key" class="form-control">
-       <!-- selected="select" or selected -->
-       <option value="t" ${(pageObject.key == "t")? " selected ":"" }
-        >제목</option>
-       <option value="c" ${(pageObject.key == "c")? " selected ":"" }
-       >내용</option>
-       <option value="w" ${(pageObject.key == "w")? " selected ":"" }
-       >작성자</option>
-       <option value="tc" ${(pageObject.key == "tc")? " selected ":"" }
-       >제목/내용</option>
-       <option value="tw" ${(pageObject.key == "tw")? " selected ":"" }
-       >제목/작성자</option>
-       <option value="cw" ${(pageObject.key == "cw")? " selected ":"" }
-       >내용/작성자</option>
-       <option value="tcw" ${(pageObject.key == "tcw")? " selected ":"" }
-       >전체</option>
-      </select>
-       <input type="text" class="form-control" placeholder="Search"
-        name="word" value="${pageObject.word }">
-      </div>
-      <div class="input-group-btn">
-        <button class="btn btn-default" type="submit">
-          <i class="glyphicon glyphicon-search"></i>
-        </button>
-      </div>
-    </div>
-  </form>
-
- </div>
-<!-- </form> -->
-</div>
+</table>
+</form>
 </div>

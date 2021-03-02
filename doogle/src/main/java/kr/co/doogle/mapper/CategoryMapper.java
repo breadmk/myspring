@@ -15,10 +15,12 @@ import kr.co.doogle.dto.CategoryDTO;
 public interface CategoryMapper {
 
 	@Select("${sql}")
-	List<CategoryDTO> getQueryAll(@Param("sql") String sql);
+	List<CategoryDTO> getAllSql(@Param("sql") String sql);
 
-	@Select("select * from category order by type asc, lv asc, idx asc")
-	List<CategoryDTO> getAll();
+	@Select({"select ctno, lv, pctno, idx, name, type, writedate from "
+			+ "(select seq, tt.* from (select rownum seq, t.* from "
+			+ "(select * from category ${where} order by type asc, lv asc, idx asc) t) tt where seq >= #{start}) where rownum <= #{end}"})
+	List<CategoryDTO> getAll(@Param("start") int start, @Param("end") int end, @Param("where") String where, @Param("type") String type);
 
 	@Select("select ctno from category where name = #{name} and lv = #{lv}")
 	int getCtno(@Param("name") String name, @Param("lv") int lv);
@@ -32,16 +34,13 @@ public interface CategoryMapper {
 	@Insert("insert into category(ctno, name, lv, type, idx, pctno) values(s_category.nextval, #{dto.name}, #{dto.lv}, #{dto.type}, #{dto.idx}, #{dto.pctno})")
 	int addChildCategory(@Param("dto") CategoryDTO dto);
 
-	@Insert("insert into category(ctno, name, lv, type, pctno) values(s_category.nextval, #{dto.name}, #{dto.lv}, #{dto.type}, #{dto.pctno})")
-	int addCategoryLv(@Param("dto") CategoryDTO dto);
-
 	@Update("update category set name = #{dto.name}, lv = #{dto.lv}, pctno = #{dto.pctno}, type = #{dto.type}, #{dto.writedate}")
 	int mod(@Param("dto") CategoryDTO dto);
 
 	@Delete("delete from category where ctno = #{ctno}")
 	int del(@Param("ctno") int ctno);
 
-	@Select("select count(*) from category")
-	int getTotal();
+	@Select("select count(*) from category ${where}")
+	int getTotal(@Param("where") String where, @Param("type") String type);
 
 }

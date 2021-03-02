@@ -17,6 +17,7 @@
 <script defer type="text/javascript" src="/static/core/js/axios.min.js"></script>
 <script defer type="text/javascript" src="/static/back/js/admin.js"></script>
 <c:if test="${url eq '/paging'}"><script defer type="text/javascript" src="/static/back/js/pagination.js"></script></c:if>
+<c:if test="${url eq '/admin/category'}"><script defer type="text/javascript" src="/static/back/js/categoryList.js"></script></c:if>
 <sitemesh:write property="head" />
 </head>
 <body>
@@ -53,7 +54,7 @@
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"></button>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="/admin/product">상품</a>
-								<a class="dropdown-item" href="/admin/product/add">추가</a>
+								<a class="dropdown-item" href="/admin/product/add">등록</a>
 							</div>
 						</div>
 					</li>

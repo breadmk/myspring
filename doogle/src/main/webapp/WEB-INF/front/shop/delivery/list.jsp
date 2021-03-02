@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
 .page_aticle {
     width: 1050px;
@@ -332,13 +333,15 @@ margin: auto;
 text-align: center;
 	}
 </style>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="/static/front/js/delivery.js"></script>
 <div class="page_aticle aticle_type2">
 <div id="" class="page_section section_destination">
 <div class="head_aticle">
 <h2 class="tit">배송지 관리 <span id="addrListInfo" class="tit_sub">배송지에 따라 상품 정보가 달라질 수 있습니다.</span></h2>
 <div class="new_address">
 <button type="button" class="btn" id="newAddressAdd" onclick="jusoPopup()">
-새 배송지 추가
++ 새 배송지 추가
 </button>
 </div>
 </div>
@@ -355,17 +358,34 @@ text-align: center;
 <th class="tit_modify">수정</th>
 </tr>
 </thead>
-<tbody id="addrList"><tr><td class="select type_radio"><label class="skin_checkbox"><input type="radio" name="addrNo" data-delivery-type="direct" value="7872732" checked=""><span class="ico1"></span><span class="screen_out">선택하기</span></label></td>
-<td class="address">
-<span class="badge_default">기본 배송지
-</span>
-<p class="addr">서울 구로구 중앙로15길 132-17 (삼익1단지아파트) 102동 1601호</p>
-</td>
-<td class="name">
-</td>
-<td class="phone"></td>
-<td><span class="delivery1">샛별배송</span>
-</td><td><button type="button" class="ico2" data-addr-no="7872732" data-addr-type="D" data-is-current-addr="true">수정하기</button></td></tr></tbody>
+<c:forEach items="${list}" var="list" varStatus="status">
+		<tr class="dno">
+			<td class="checkBox">
+				<input type="hidden" value="${list.dno}" class="dno1">
+				<input type="radio" name="default" value="${list.default_yn}" class="checkbox_class" onclick="update()">
+			</td>
+			<td>
+			<c:if test="${status.first}">
+					<span class="badge_default">기본 배송지</span><p>
+			</c:if> ${list.addr} ${list.addr_detail}
+			</td>
+			<td>${list.receive_name}</td>
+			<td>${list.phone }</td>
+			<td>
+			<c:if test="${list.type eq 's'}">
+				샛별배송
+			</c:if>
+			<c:if test="${list.type eq 't'}">
+				택배배송
+			</c:if>
+			</td>
+			<td>
+				<button type="button" class="ico2" data-addr-no="7872732"
+					data-addr-type="D" data-is-current-addr="true"
+					onclick="updatePop()">수정하기</button>
+			</td>
+		</tr>
+	</c:forEach>
 </table>
 
 </div>

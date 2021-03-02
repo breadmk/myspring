@@ -8,7 +8,7 @@ table {
     margin-right:auto;
 }
 </style>
-<script src="/static/front/js/notice_update.js"></script>
+<script src="/static/front/js/notice_insert.js"></script>
 <div class="container">
 <h3>공지사항 수정</h3>
 <form action="/shop/notice_update_ok" method="post" name="mk">

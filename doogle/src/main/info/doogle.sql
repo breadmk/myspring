@@ -20,17 +20,27 @@ ALTER TABLE product
 
 ALTER TABLE product
 	DROP
-		CONSTRAINT product_dis_not_c
+		CONSTRAINT product_dis_yn_c
 		CASCADE;
 
 ALTER TABLE product
 	DROP
-		CONSTRAINT product_earn_not_c
+		CONSTRAINT product_earn_yn_c
 		CASCADE;
 
 ALTER TABLE product
 	DROP
-		CONSTRAINT product_sel_not_c
+		CONSTRAINT product_sel_yn_c
+		CASCADE;
+
+ALTER TABLE product
+	DROP
+		CONSTRAINT product_only_yn_c
+		CASCADE;
+
+ALTER TABLE product
+	DROP
+		CONSTRAINT product_od_yn_c
 		CASCADE;
 
 ALTER TABLE category
@@ -41,6 +51,16 @@ ALTER TABLE category
 ALTER TABLE orders
 	DROP
 		CONSTRAINT orders_type_c
+		CASCADE;
+
+ALTER TABLE delivery
+	DROP
+		CONSTRAINT delivery_default_yn_c
+		CASCADE;
+
+ALTER TABLE delivery
+	DROP
+		CONSTRAINT delivery_type_c
 		CASCADE;
 
 ALTER TABLE coupon
@@ -56,11 +76,6 @@ ALTER TABLE notice
 ALTER TABLE bulk_order
 	DROP
 		CONSTRAINT bulk_order_type_c
-		CASCADE;
-
-ALTER TABLE product_info
-	DROP
-		CONSTRAINT product_info_type_c
 		CASCADE;
 
 ALTER TABLE payment
@@ -277,7 +292,7 @@ DROP INDEX category_ctno_i;
 
 DROP INDEX orders_ono_i;
 
-DROP INDEX basket_sbno_i;
+DROP INDEX basket_bno_p;
 
 DROP INDEX grade_gno_i;
 
@@ -722,23 +737,26 @@ ALTER TABLE member
 /* 상품(이승준) */
 CREATE TABLE product (
 	pno NUMBER NOT NULL, /* 상품번호 */
-	pname VARCHAR2(300) NOT NULL, /* 상품명 */
-	psubject VARCHAR2(300), /* 부제목 */
+	brand VARCHAR2(300), /* 브랜드명 */
+	name VARCHAR2(300) NOT NULL, /* 상품명 */
+	subject VARCHAR2(300), /* 부제목 */
 	sel_unit VARCHAR2(100) NOT NULL, /* 판매단위 */
 	weight VARCHAR2(100) NOT NULL, /* 중량/용량 */
 	pack_type CHAR(1) DEFAULT 'd' NOT NULL, /* 포장타입 */
 	info VARCHAR2(500), /* 안내사항 */
 	price NUMBER NOT NULL, /* 가격 */
 	discount NUMBER DEFAULT 0 NOT NULL, /* 할인율 */
-	dis_not CHAR(1) DEFAULT 'n' NOT NULL, /* 할인여부 */
+	dis_yn CHAR(1) DEFAULT 'n' NOT NULL, /* 할인여부 */
 	earn NUMBER DEFAULT 0 NOT NULL, /* 적립율 */
-	earn_not CHAR(1) DEFAULT 'n' NOT NULL, /* 적립여부 */
-	cno NUMBER NOT NULL, /* 카테고리번호(대) */
-	cno1 NUMBER NOT NULL, /* 카테고리번호(중) */
-	cno2 NUMBER NOT NULL, /* 카테고리번호(소) */
-	fno NUMBER, /* 상품이미지 */
+	earn_yn CHAR(1) DEFAULT 'n' NOT NULL, /* 적립여부 */
+	ctno NUMBER NOT NULL, /* 카테고리번호(대) */
+	ctno1 NUMBER, /* 카테고리번호(중) */
+	ctno2 NUMBER, /* 카테고리번호(소) */
+	only_yn CHAR(1) DEFAULT 'n' NOT NULL, /* 두글만팜 */
+	od_yn CHAR(1) DEFAULT 'n' NOT NULL, /* 최저가 */
+	fno VARCHAR2(100) NOT NULL, /* 상품이미지 */
 	quantity NUMBER DEFAULT 0 NOT NULL, /* 수량 */
-	sel_not CHAR(1) DEFAULT 'y' NOT NULL, /* 판매여부 */
+	sel_yn CHAR(1) DEFAULT 'y' NOT NULL, /* 판매여부 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
 );
 
@@ -746,9 +764,11 @@ COMMENT ON TABLE product IS '상품(이승준)';
 
 COMMENT ON COLUMN product.pno IS '상품번호';
 
-COMMENT ON COLUMN product.pname IS '상품명';
+COMMENT ON COLUMN product.brand IS '브랜드명';
 
-COMMENT ON COLUMN product.psubject IS '부제목';
+COMMENT ON COLUMN product.name IS '상품명';
+
+COMMENT ON COLUMN product.subject IS '부제목';
 
 COMMENT ON COLUMN product.sel_unit IS '판매단위';
 
@@ -762,23 +782,27 @@ COMMENT ON COLUMN product.price IS '가격';
 
 COMMENT ON COLUMN product.discount IS '할인율';
 
-COMMENT ON COLUMN product.dis_not IS '할인여부';
+COMMENT ON COLUMN product.dis_yn IS '할인여부';
 
 COMMENT ON COLUMN product.earn IS '적립율';
 
-COMMENT ON COLUMN product.earn_not IS '적립여부';
+COMMENT ON COLUMN product.earn_yn IS '적립여부';
 
-COMMENT ON COLUMN product.cno IS '카테고리번호(대)';
+COMMENT ON COLUMN product.ctno IS '카테고리번호(대)';
 
-COMMENT ON COLUMN product.cno1 IS '카테고리번호(중)';
+COMMENT ON COLUMN product.ctno1 IS '카테고리번호(중)';
 
-COMMENT ON COLUMN product.cno2 IS '카테고리번호(소)';
+COMMENT ON COLUMN product.ctno2 IS '카테고리번호(소)';
+
+COMMENT ON COLUMN product.only_yn IS '두글만팜';
+
+COMMENT ON COLUMN product.od_yn IS '최저가';
 
 COMMENT ON COLUMN product.fno IS '상품이미지';
 
 COMMENT ON COLUMN product.quantity IS '수량';
 
-COMMENT ON COLUMN product.sel_not IS '판매여부';
+COMMENT ON COLUMN product.sel_yn IS '판매여부';
 
 COMMENT ON COLUMN product.writedate IS '등록일';
 
@@ -801,18 +825,28 @@ ALTER TABLE product
 
 ALTER TABLE product
 	ADD
-		CONSTRAINT product_dis_not_c
-		CHECK (dis_not in ('y','n'));
+		CONSTRAINT product_dis_yn_c
+		CHECK (dis_yn in ('y','n'));
 
 ALTER TABLE product
 	ADD
-		CONSTRAINT product_earn_not_c
-		CHECK (earn_not in ('y','n'));
+		CONSTRAINT product_earn_yn_c
+		CHECK (earn_yn in ('y','n'));
 
 ALTER TABLE product
 	ADD
-		CONSTRAINT product_sel_not_c
-		CHECK (sel_not in ('y','n'));
+		CONSTRAINT product_sel_yn_c
+		CHECK (sel_yn in ('y','n'));
+
+ALTER TABLE product
+	ADD
+		CONSTRAINT product_only_yn_c
+		CHECK (only_yn in ('y','n'));
+
+ALTER TABLE product
+	ADD
+		CONSTRAINT product_od_yn_c
+		CHECK (od_yn in ('y','n'));
 
 /* 카테고리(이승준) */
 CREATE TABLE category (
@@ -821,7 +855,7 @@ CREATE TABLE category (
 	lv NUMBER(1) DEFAULT 0 NOT NULL, /* 카테고리레벨 */
 	pctno NUMBER, /* 부모카테고리번호 */
 	type CHAR(1) DEFAULT 'p' NOT NULL, /* 카테고리타입 */
-	idx NUMBER DEFAULT 1, /* 순서 */
+	idx NUMBER DEFAULT 1 NOT NULL, /* 순서 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
 );
 
@@ -856,7 +890,7 @@ ALTER TABLE category
 ALTER TABLE category
 	ADD
 		CONSTRAINT category_type_c
-		CHECK (type in ('p','o','q','t','f'));
+		CHECK (type in ('p','o','q','t','f','e','c','d'));
 
 /* 주문(헨리) */
 CREATE TABLE orders (
@@ -897,37 +931,40 @@ ALTER TABLE orders
 
 /* 장바구니(정지원) */
 CREATE TABLE basket (
-	sbno NUMBER NOT NULL, /* 장바구니번호 */
+	bno NUMBER NOT NULL, /* 장바구니번호 */
 	mno NUMBER NOT NULL, /* 회원번호 */
 	pno NUMBER NOT NULL, /* 상품번호 */
+	pono NUMBER, /* 상품옵션번호 */
 	quantity NUMBER DEFAULT 0 NOT NULL, /* 수량 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
 );
 
 COMMENT ON TABLE basket IS '장바구니(정지원)';
 
-COMMENT ON COLUMN basket.sbno IS '장바구니번호';
+COMMENT ON COLUMN basket.bno IS '장바구니번호';
 
 COMMENT ON COLUMN basket.mno IS '회원번호';
 
 COMMENT ON COLUMN basket.pno IS '상품번호';
 
+COMMENT ON COLUMN basket.pono IS '상품옵션번호';
+
 COMMENT ON COLUMN basket.quantity IS '수량';
 
 COMMENT ON COLUMN basket.writedate IS '등록일';
 
-CREATE UNIQUE INDEX basket_sbno_i
+CREATE UNIQUE INDEX basket_bno_p
 	ON basket (
-		sbno ASC,
+		bno ASC,
 		mno ASC,
 		pno ASC
 	);
 
 ALTER TABLE basket
 	ADD
-		CONSTRAINT basket_sbno_p
+		CONSTRAINT basket_bno_p
 		PRIMARY KEY (
-			sbno,
+			bno,
 			mno,
 			pno
 		);
@@ -973,6 +1010,8 @@ CREATE TABLE delivery (
 	addr_detail VARCHAR2(300) NOT NULL, /* 상세주소 */
 	receive_name VARCHAR2(100) NOT NULL, /* 받으시는분 */
 	phone VARCHAR2(20) NOT NULL, /* 핸드폰 */
+	type CHAR(1) DEFAULT 't' NOT NULL, /* 배송유형 */
+	default_yn CHAR(1) DEFAULT 'y' NOT NULL, /* 기본배송지 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
 );
 
@@ -990,6 +1029,10 @@ COMMENT ON COLUMN delivery.receive_name IS '받으시는분';
 
 COMMENT ON COLUMN delivery.phone IS '핸드폰';
 
+COMMENT ON COLUMN delivery.type IS '배송유형';
+
+COMMENT ON COLUMN delivery.default_yn IS '기본배송지';
+
 COMMENT ON COLUMN delivery.writedate IS '등록일';
 
 CREATE UNIQUE INDEX delivery_dno_i
@@ -1006,10 +1049,20 @@ ALTER TABLE delivery
 			mno
 		);
 
+ALTER TABLE delivery
+	ADD
+		CONSTRAINT delivery_default_yn_c
+		CHECK (default_yn in ('y','n'));
+
+ALTER TABLE delivery
+	ADD
+		CONSTRAINT delivery_type_c
+		CHECK (type in ('t','s'));
+
 /* 쿠폰(박용순) */
 CREATE TABLE coupon (
 	cno NUMBER NOT NULL, /* 쿠폰번호 */
-	pno NUMBER, /* 상품번호 */
+	pno VARCHAR2(100), /* 상품번호 */
 	content CLOB NOT NULL, /* 쿠폰내용 */
 	discount NUMBER DEFAULT 0 NOT NULL, /* 할인율 */
 	dis_price NUMBER DEFAULT 0 NOT NULL, /* 할인금액 */
@@ -1131,7 +1184,6 @@ CREATE TABLE notice (
 	title VARCHAR2(500) NOT NULL, /* 제목 */
 	content CLOB NOT NULL, /* 내용 */
 	name VARCHAR2(30) DEFAULT '관리자' NOT NULL, /* 작성자 */
-	state NUMBER DEFAULT 0 NOT NULL,
 	read_cnt NUMBER DEFAULT 0 NOT NULL, /* 조회수 */
 	type CHAR(1) DEFAULT 'y' NOT NULL, /* 노출여부 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
@@ -1462,11 +1514,6 @@ ALTER TABLE product_info
 			pno
 		);
 
-ALTER TABLE product_info
-	ADD
-		CONSTRAINT product_info_type_c
-		CHECK (type in ('y','n'));
-
 /* 상품옵션(이승준) */
 CREATE TABLE product_option (
 	pono NUMBER NOT NULL, /* 옵션번호 */
@@ -1506,7 +1553,8 @@ ALTER TABLE product_option
 CREATE TABLE event (
 	eno NUMBER NOT NULL, /* 이벤트번호 */
 	fno_main NUMBER NOT NULL, /* 메인이미지 */
-	content CLOB NOT NULL, /* 내용 */
+	content CLOB, /* 내용 */
+	link VARCHAR2(300) NOT NULL, /* 링크 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
 );
 
@@ -1517,6 +1565,8 @@ COMMENT ON COLUMN event.eno IS '이벤트번호';
 COMMENT ON COLUMN event.fno_main IS '메인이미지';
 
 COMMENT ON COLUMN event.content IS '내용';
+
+COMMENT ON COLUMN event.link IS '링크';
 
 COMMENT ON COLUMN event.writedate IS '등록일';
 
@@ -1954,10 +2004,10 @@ ALTER TABLE question
 /* 파일(이승준) */
 CREATE TABLE files (
 	fno NUMBER NOT NULL, /* 파일번호 */
-	mno NUMBER NOT NULL, /* 회원번호 */
+	mno NUMBER, /* 회원번호 */
 	name VARCHAR2(200) NOT NULL, /* 파일명 */
 	real_name VARCHAR2(200) NOT NULL, /* 실제파일명 */
-	loc VARCHAR2(500) NOT NULL, /* 경로 */
+	loc VARCHAR2(500) DEFAULT '/static/upload/img/shop/product/' NOT NULL, /* 경로 */
 	ctno NUMBER NOT NULL, /* 카테고리번호 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
 );
