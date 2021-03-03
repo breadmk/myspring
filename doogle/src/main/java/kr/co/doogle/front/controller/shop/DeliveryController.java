@@ -31,7 +31,6 @@ public class DeliveryController {
 		List<DeliveryDTO> list = deliveryMapper.getAll(mno);
 		ArrayList<String> addr = deliveryMapper.getAddr(mno);
 		ArrayList<Integer> addrlist = deliveryMapper.addrRegexp();
-		System.out.println(addrlist.size());
 //		for(int dno : addrlist) {
 //			System.out.println(dno);
 //			deliveryMapper.addrUpdate(dno);

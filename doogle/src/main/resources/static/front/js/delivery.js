@@ -44,37 +44,51 @@ function updatePop() {
 	})
 }
 
-function check() {
+$(function(){
 	$(".checkbox_class").each(function(i) {
 		var value = $(this).val();
-		if (value == 'y')
+		console.log(value);
+		if (value == 'y'){
 			$(".checkbox_class").eq(i).attr("checked", true);
-
+		}
 	});
-}
+})
+//function check() {
+//	$(".checkbox_class").each(function(i) {
+//		var value = $(this).val();
+//		console.log(value);
+//		alert(value);
+//		if (value == 'y'){
+//			$(".checkbox_class").eq(i).attr("checked", true);
+//		}
+//	});
+//};
+//
+//check();
 
-check();
 
 function update() {
 	$(".dno").click(function() {
 		var default_yn = $(this).find(".checkbox_class").val();
 		var dno = $(this).find(".dno1").val();
 		$.ajax({
-			url: "/delivery_defaultUpdate?dno="+dno,
+			url: "/delivery_defaultUpdate?dno=" + dno,
 			type: "post",
-			data : {
-				default_yn:default_yn,
+			data: {
+				default_yn: default_yn,
 			},
-			dataType:"text",
-			success:function(){
+			dataType: "text",
+			success: function() {
 				console.log("기본배송지 변경완료");
 			}
-			
+
 		});
 	});
 	alert("기본배송지 변경 완료")
 
 }
+
+
 
 
 

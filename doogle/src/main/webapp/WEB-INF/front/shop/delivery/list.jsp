@@ -333,6 +333,8 @@ margin: auto;
 text-align: center;
 	}
 </style>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="/static/front/js/delivery.js"></script>
 <div class="page_aticle aticle_type2">
 <div id="" class="page_section section_destination">
 <div class="head_aticle">

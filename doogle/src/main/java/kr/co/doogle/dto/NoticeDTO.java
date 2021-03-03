@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NoticeDTO {
 	private int nno,read_cnt,state;
-	private String name,title,content,writedate,type,next,prev;
+	private String name,title,content,writedate,type,next,prev,search;
 	
 }

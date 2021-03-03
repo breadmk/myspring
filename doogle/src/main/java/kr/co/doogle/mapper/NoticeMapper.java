@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.type.JdbcType;
+import org.eclipse.jdt.internal.compiler.ast.Annotation.AnnotationTargetAllowed;
 
 import kr.co.doogle.dto.NoticeDTO;
 import net.webjjang.util.PageObject;
@@ -22,14 +23,22 @@ public interface NoticeMapper {
 	" values (#{dto.type},s_notice.nextval,#{dto.name},#{dto.title},#{dto.content},sysdate,#{dto.state})")
 	int insert(@Param("dto") NoticeDTO dto);
 	//페이지처리를 위한 전체 조회 쿼리
-	@Select("select * from (select rownum rnum,nno,name,title,content,writedate,read_cnt,state,type from "+ 
-			" (select nno,name,title,content,writedate,read_cnt,state,type from notice where type='y' "+
-			" order by nno desc)) where rnum between #{startRow} and #{endRow}")
-	@Result(property = "content", column = "content", jdbcType = JdbcType.CLOB, javaType = String.class)
-	List<NoticeDTO> getAll(PageObject pageObject);
+//	@Select("select * from (select rownum rnum,nno,name,title,content,writedate,read_cnt,state,type from "+ 
+//			" (select nno,name,title,content,writedate,read_cnt,state,type from notice where type='y' "+
+//			" order by nno desc)) where rnum between #{startRow} and #{endRow}")
+//	@Result(property = "content", column = "content", jdbcType = JdbcType.CLOB, javaType = String.class)
+//	List<NoticeDTO> getAll(PageObject pageObject);
 	//페이지처리를 위한 레코드 총 갯수 처리.
 	@Select("select count(*) from notice")
 	int getRow(PageObject pageObject);
+	
+	@Select({"select nno,title,content,name,read_cnt,type,writedate,state from (select seq, tt.* from (select rownum seq, t.* from "
+			+ " (select * from notice ${where} order by nno desc ) t) tt where seq >= #{start}) where rownum <= #{end}"})
+	@Result(property = "content", column = "content", jdbcType = JdbcType.CLOB, javaType = String.class)
+	List<NoticeDTO> getAll(@Param("start") int start, @Param("end")int end, @Param("where")String where, @Param("title")String title);
+	
+	@Select("select count(*) from notice ${where}")
+	int getTotal(@Param("where") String where, @Param("title") String title);
 	
 	//단일 계정 조회
 	@Select("select * from notice where nno=#{param1}")
@@ -45,6 +54,9 @@ public interface NoticeMapper {
 	
 	@Delete("delete from notice where nNo=#{param1}")
 	int delete(@Param("no") int no);
+	
+	@Update("update notice set read_cnt = read_cnt+ 1 where nno=#{param1}")
+	int noticeReadCnt(@Param("no") int no);
 	
 //    @Select({"<script>",
 //      "select notice from ",

@@ -3,6 +3,9 @@ package kr.co.doogle.key;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class Key {
 
 	private Map<Kyes, String> keys = new HashMap();
