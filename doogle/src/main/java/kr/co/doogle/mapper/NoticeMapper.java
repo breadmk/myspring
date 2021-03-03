@@ -34,6 +34,7 @@ public interface NoticeMapper {
 	
 	@Select({"select nno,title,content,name,read_cnt,type,writedate,state from (select seq, tt.* from (select rownum seq, t.* from "
 			+ " (select * from notice ${where} order by nno desc ) t) tt where seq >= #{start}) where rownum <= #{end}"})
+	@Result(property = "content", column = "content", jdbcType = JdbcType.CLOB, javaType = String.class)
 	List<NoticeDTO> getAll(@Param("start") int start, @Param("end")int end, @Param("where")String where, @Param("title")String title);
 	
 	@Select("select count(*) from notice ${where}")
@@ -53,6 +54,9 @@ public interface NoticeMapper {
 	
 	@Delete("delete from notice where nNo=#{param1}")
 	int delete(@Param("no") int no);
+	
+	@Update("update notice set read_cnt = read_cnt+ 1 where nno=#{param1}")
+	int noticeReadCnt(@Param("no") int no);
 	
 //    @Select({"<script>",
 //      "select notice from ",

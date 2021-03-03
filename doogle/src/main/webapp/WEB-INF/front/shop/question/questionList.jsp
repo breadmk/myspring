@@ -127,40 +127,6 @@
     margin: 0 15px 5px 0
 }
 
-.xans-board-listheader .thumb {
-    width: 126px
-}
-
-.xans-board-listheader .thumb img {
-    width: 126px
-}
-
-.xans-board-listheader .thumb2 {
-    width: 150px
-}
-
-.xans-board-listheader .quantity {
-    width: 70px
-}
-
-.xans-board-listheader .system {
-    width: 100px
-}
-
-.xans-board-listheader .rev {
-    width: 100px
-}
-
-.xans-board-listheader .price_p {
-    font-size: 12px;
-    color: #000
-}
-
-.xans-board-listheader .opt {
-    color: gray;
-    font-size: 12px
-}
-
 .xans-board-listheader td.product {
     width: auto;
     padding: 12px 20px
@@ -174,33 +140,6 @@
     padding: 20px 0;
     vertical-align: middle;
     font-size: 12px
-}
-
-.xans-board-listheader .state {
-    width: 110px;
-    font-weight: 700
-}
-
-.xans-board-listheader .product {
-    width: auto
-}
-
-.xans-board-listheader .state {
-    width: 110px;
-    font-weight: 700
-}
-
-.xans-board-listheader .number {
-    width: 181px
-}
-
-.xans-board-listheader .state {
-    width: 156px;
-    font-weight: 700
-}
-
-.xans-board-listheader td.state {
-    color: #795c90
 }
 .page_aticle button,.page_aticle input,.page_aticle select,.page_aticle * {
     font-family: noto sans;
@@ -328,8 +267,21 @@ color: #555;
 .input_txt{
 text-align: center;
 }
-.input_txt th {
-    padding: 10px 0
+
+#a1{
+text-align: center;
+width:20%;
+}
+
+#a2{
+text-align: center;
+width:30%;
+}
+
+
+#a3{
+text-align: center;
+width:50%;
 }
 .xans-board-search .input_txt img {
     position: relative;
@@ -507,36 +459,36 @@ a:link { text-decoration: none;}
  	<option value="questionList?no=6">서비스 이용 및 기타</option>
  </select>
 </div>
-
 <div class="xans-element- xans-myshop xans-myshop-couponserial ">
 <table width="100%" class="xans-board-listheader">
 <tr>
-<th width="70" class="input_txt">번호</th>
-<th width="135" class="input_txt">카테고리</th>
-<th class="input_txt">제목</th>
+<th id="a1">번호</th>
+<th id="a2">카테고리</th>
+<th id="a3">제목</th>
 </tr>
-</table>
-<table width="100%" class="table_faq">
+<!-- </table> -->
+<!-- <table width="100%" class="table_faq"> -->
+
 <c:forEach items="${list}" var="list">
 <c:if test="${list.type eq 'y'}">
 <tr class="qna">
 <td class="td1">${list.qno}</td>
-<c:if test="${list.ctno==1}">
+<c:if test="${list.ctno==217}">
 <td id="td1">회원문의</td>
 </c:if>
-<c:if test="${list.ctno==2}">
+<c:if test="${list.ctno==218}">
 <td id="td2">주문/결제</td>
 </c:if>
-<c:if test="${list.ctno==3}">
+<c:if test="${list.ctno==219}">
 <td id="td2">취소/교환/반품</td>
 </c:if>
-<c:if test="${list.ctno==4}">
+<c:if test="${list.ctno==220}">
 <td id="td2">배송문의</td>
 </c:if>
-<c:if test="${list.ctno==5}">
+<c:if test="${list.ctno==221}">
 <td id="td2">쿠폰/적립금</td>
 </c:if>
-<c:if test="${list.ctno==6}">
+<c:if test="${list.ctno==222}">
 <td id="td2">서비스 이용 및 기타</td>
 </c:if>
 <td style="cursor:pointer" id="td3">${list.title}</td>

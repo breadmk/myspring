@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.co.doogle.api.data.Data;
 import kr.co.doogle.key.Key;
 
-@EntityScan(basePackages = {"kr.co.doogle.key"})
 @Controller
 public class MainController {
 
-	@Autowired(required = true)
+	@Autowired
 	private Key key;
 	@Autowired
 	private Data data;

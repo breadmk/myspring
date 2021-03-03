@@ -29,6 +29,11 @@ public interface QuestionMapper {
     		" order by qno desc)) where rnum between #{pageObject.startRow} and #{pageObject.endRow}")
 	List<QuestionDTO> getAll_1(@Param("no")String no, PageObject pageObject);
 	
+	@Select({"select qno,title,content,ctno,type,writedate from (select seq, tt.* from (select rownum seq, t.* from "
+			+ " (select * from question ${where} order by qno desc ) t) tt where seq >= #{start}) where rownum <= #{end}"})
+	List<QuestionDTO> getAll2(@Param("start") int start, @Param("end")int end, @Param("where")String where, @Param("ctno") Integer ctno);
+	
+	
 //	자주하는질문 페이징처리를 위한 레코드 조회
 	@Select("select count(*) from question")
 	int getRow(PageObject pageObject);
@@ -46,4 +51,9 @@ public interface QuestionMapper {
 	
 	@Update("update question set title=#{title},content=#{content},type=#{type},ctno=#{ctno} where qno=#{qno}")
 	int update(QuestionDTO dto);
+	
+	@Select("select count(*) from question ${where}")
+	int getTotal(@Param("where") String where, @Param("ctno") Integer ctno);
+	
+	
 }

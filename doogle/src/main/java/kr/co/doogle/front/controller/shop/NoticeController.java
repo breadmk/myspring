@@ -88,16 +88,23 @@ public class NoticeController {
 		return "/front/shop/notice/notice_update";
 		
 	}
+	
 	@RequestMapping("/shop/notice_update_ok")
 	public String notice_update_ok(NoticeDTO dto) {
 		noticeMapper.update(dto);
 		return "redirect:/shop/notice_view?no="+dto.getNno();
 		
 	}
+	
 	@RequestMapping("/shop/notice_delete")
 	public String notice_delete(int no) {
 		noticeMapper.delete(no);
 		return "redirect:/shop/notice";
-		
+	}
+	
+	@RequestMapping("/shop/noticeReadCnt")
+	public String noticeReadCnt(int no) {
+		noticeMapper.noticeReadCnt(no);
+		return "redirect:/shop/notice_view?no="+no;
 	}
 }

@@ -10,14 +10,21 @@
 <link rel="icon" href="/static/front/img/favicon.ico" type="image/x-icon" />
 <title>Doogle admin</title>
 <link rel="stylesheet" href="/static/core/css/bootstrap.min.css">
-<link rel="stylesheet" href="/static/front/css/global.css">
+<c:if test="${edit eq 'edit'}"><link rel="stylesheet" href="/static/core/css/summernote-bs4.min.css"></c:if>
+<link rel="stylesheet" href="/static/back/css/global.css">
 <link rel="stylesheet" href="/static/back/css/admin.css">
+<c:if test="${url eq '/admin/product' || url eq '/admin/product/add'}"><link rel="stylesheet" href="/static/back/css/product.css"></c:if>
 <script defer type="text/javascript" src="/static/core/js/jquery-3.5.1.min.js"></script>
+<c:if test="${edit eq 'edit'}"><script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script></c:if>
 <script defer type="text/javascript" src="/static/core/js/bootstrap.min.js"></script>
 <script defer type="text/javascript" src="/static/core/js/axios.min.js"></script>
+<c:if test="${edit eq 'edit'}"><script defer type="text/javascript" src="/static/core/js/summernote-bs4.min.js"></script></c:if>
+<c:if test="${edit eq 'edit'}"><script defer type="text/javascript" src="/static/core/js/summernote-ko-KR.min.js"></script></c:if>
+<c:if test="${edit eq 'edit'}"><script defer type="text/javascript" src="/static/back/js/edit.js"></script></c:if>
 <script defer type="text/javascript" src="/static/back/js/admin.js"></script>
 <c:if test="${url eq '/paging'}"><script defer type="text/javascript" src="/static/back/js/pagination.js"></script></c:if>
 <c:if test="${url eq '/admin/category'}"><script defer type="text/javascript" src="/static/back/js/categoryList.js"></script></c:if>
+<c:if test="${url eq '/admin/product/add'}"><script defer type="text/javascript" src="/static/back/js/productAdd.js"></script></c:if>
 <sitemesh:write property="head" />
 </head>
 <body>
@@ -121,6 +128,27 @@
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="/admin/notice">공지</a>
 								<a class="dropdown-item" href="/admin/notice/add">추가</a>
+							</div>
+						</div>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="/admin/coupon">쿠폰</a></li>
+					<li>
+						<div class="dropdown">
+							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"></button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="/admin/coupon">쿠폰</a>
+								<a class="dropdown-item" href="/admin/coupon/add">추가</a>
+								<a class="dropdown-item" href="/admin/coupon/myCoupon">회원쿠폰</a>
+							</div>
+						</div>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="/admin/question">자주하는질문</a></li>
+					<li>
+						<div class="dropdown">
+							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"></button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="/admin/question">자주하는질문</a>
+								<a class="dropdown-item" href="/admin/question/add">추가</a>
 							</div>
 						</div>
 					</li>

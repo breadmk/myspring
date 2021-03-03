@@ -52,6 +52,7 @@ public class QnaController {
 	
 	@RequestMapping("/shop/qnaUpdate")
 	public String qnaUpdate(QnaDTO dto,Model model,int qnno) {
+		
 		System.out.println(qnno);
 		
 		return "/front/shop/qna/qnaUpdate";

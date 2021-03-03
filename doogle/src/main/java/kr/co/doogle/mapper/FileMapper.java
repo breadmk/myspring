@@ -12,8 +12,8 @@ import kr.co.doogle.dto.FileDTO;
 @Mapper
 public interface FileMapper {
 
-	@Select("select * from files ${param1}")
-	List<FileDTO> getAll(@Param("where") String where, @Param("ctno") int ctno);
+	@Select("select * from files ${where}")
+	List<FileDTO> getAll(@Param("where") String where, @Param("fno") String fno);
 
 	@Select("select count(*) from files ${param1}")
 	int getTotal(@Param("where") String where, @Param("ctno") int ctno);
@@ -21,7 +21,7 @@ public interface FileMapper {
 	@Select("select s_files.nextval from dual")
 	int getSeq();
 
-	@Insert("insert into files(fno, name, real_name, loc, ctno) values(s_files.nextval, #{dto.name}, #{dto.real_name}, #{dto.loc}, #{dto.ctno})")
+	@Insert("insert into files(fno, name, real_name, loc, ctno) values(#{dto.fno}, #{dto.name}, #{dto.real_name}, #{dto.loc}, #{dto.ctno})")
 	int add(@Param("dto") FileDTO dto);
 
 }

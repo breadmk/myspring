@@ -21,7 +21,7 @@ import kr.co.doogle.storage.StorageService;
 @Service
 @EnableConfigurationProperties(StorageProperties.class)
 public class File {
-	
+
 	private final StorageService storageService;
 	@Inject
 	private FileSystemStorageService fileSystemStorageService;
@@ -62,7 +62,7 @@ public class File {
 	}
 
 	public String getRealLoc(String loc) {
-		return this.loc.get(loc).replace("src/main/resources/", "") + "/";
+		return this.loc.get(loc).replace("src/main/resources/", "/") + "/";
 	}
 
 }
