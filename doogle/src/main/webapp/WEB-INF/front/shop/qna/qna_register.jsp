@@ -420,17 +420,17 @@
 <th class="input_txt">제목</th>
 <td><select name="ctno" required="" fld_esssential="" label="질문유형" class="select">
 <option value="">선택해주세요.</option>
-<option value="223">배송지연/불만</option>
-<option value="224">컬리패스 (무료배송)</option>
-<option value="225">반품문의</option>
-<option value="226">A/S문의</option>
-<option value="227">환불문의</option>
-<option value="228">주문결제문의</option>
-<option value="229">회원정보문의</option>
-<option value="230">취소문의</option>
-<option value="230">교환문의</option>
-<option value="231">상품정보문의</option>
-<option value="233">기타문의</option>
+<option value="243">배송지연/불만</option>
+<option value="244">컬리패스 (무료배송)</option>
+<option value="245">반품문의</option>
+<option value="246">A/S문의</option>
+<option value="247">환불문의</option>
+<option value="248">주문결제문의</option>
+<option value="249">회원정보문의</option>
+<option value="250">취소문의</option>
+<option value="251">교환문의</option>
+<option value="252">상품정보문의</option>
+<option value="253">기타문의</option>
 </select><br>
 <input type="text" name="title" style="width:100%" required="" fld_esssential="" label="제목" value="">
 </td>
@@ -438,7 +438,7 @@
 <tr>
 <th class="input_txt">주문번호</th>
 <td>
-<input type="text" name="ono" style="width:25%">
+<input type="text" name="ono" style="width:25%" id="onono">
 <input onclick="order_open()" type="button" class="bhs_button yb" value="주문조회" style="float:none; line-height:27px; width:100px;">
 <div style="position:relative;z-index:1">
 <iframe id="ifm_order" frameborder="0" scrolling="no" style="display:none;position:absolute;width:560px;height:380px;background-color:#fff;position:absolute;left:0;top:0;border:1px solid #000"></iframe>

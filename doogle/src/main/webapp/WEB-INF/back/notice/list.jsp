@@ -21,7 +21,7 @@
 	</thead>
 	<tbody>
 		<c:forEach items="${list}" var="list">
-			<tr class="viewRow">
+			<tr>
 				<c:if test="${list.state==1}">
 					<td>공지</td>
 				<input type="hidden" value="${list.nno}" class="nnum">
@@ -30,14 +30,16 @@
 				<input type="hidden" value="${list.nno}" class="nnum">
 					<td class="NNo">${list.nno}</td>
 				</c:if>
-				<td>${list.title}</td>
+				<td class="viewRow">${list.title}</td>
 				<td>${list.name}</td>
 				<td><fmt:parseDate value="${list.writedate}" var="writedate"
 						pattern="yyyy-MM-dd" /> <fmt:formatDate value="${writedate}"
 						pattern="yyyy-MM-dd" /></td>
 				<td>${list.read_cnt}</td>
-				<td><a href="/admin/notice_update?no=${list.nno}">수정</a> / <a
-					href="/admin/notice_delete?no=${list.nno}" class="delete">삭제</a></td>
+				<td>
+					<button class="btn btn-success update">수정</button>
+					<button class="btn btn-danger delete">삭제</button>
+			</td>
 			</tr>
 		</c:forEach>
 	</tbody>

@@ -9,7 +9,12 @@ $(function(){
 	
 	$("button[name=del]").click(function(){
 		var qno = $(this).parent().parent().find(".td1").text();
+		var con = confirm("정말로 삭제하시겠습니까?");
+		if(con){
 		location.href="/admin/questionDelete?qno="+qno;
+		}else{
+			return false;
+		}
 	});
 	
 });

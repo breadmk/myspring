@@ -28,8 +28,7 @@
 <c:if test="${url eq '/admin/notice/add'}"><script defer type="text/javascript" src="/static/back/js/notice_insert.js"></script></c:if>
 <c:if test="${url eq '/admin/question/add'}"><script defer type="text/javascript" src="/static/back/js/questionRegister.js"></script></c:if>
 <c:if test="${url eq '/admin/questionUpdate'}"><script defer type="text/javascript" src="/static/back/js/questionUpdate.js"></script></c:if>
-<sitemesh:write property="head" />
-</head>
+<sitemesh:write property="head" /></head>
 <body>
 	<div id="wrap">
 		<header>
@@ -152,6 +151,15 @@
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="/admin/question">자주하는질문</a>
 								<a class="dropdown-item" href="/admin/question/add">추가</a>
+							</div>
+						</div>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="/admin/alarm">재입고알림</a></li>
+					<li>
+						<div class="dropdown">
+							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"></button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="/admin/alarm">재입고알림</a>
 							</div>
 						</div>
 					</li>

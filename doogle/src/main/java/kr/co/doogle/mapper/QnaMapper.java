@@ -12,8 +12,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.type.JdbcType;
 
+import kr.co.doogle.dto.Order_listPaymentProductDTO;
 import kr.co.doogle.dto.QnaDTO;
-import net.webjjang.util.PageObject;
 
 @Mapper
 public interface QnaMapper {
@@ -23,22 +23,24 @@ public interface QnaMapper {
 			" #{dto.name},#{dto.email},#{dto.email_yn},#{dto.phone},#{dto.phone_yn},#{dto.fno},sysdate)")
 	int insert(@Param("dto") QnaDTO dto);
 	
-	@Select("select * from (select rownum rnum,qnno,mno,ono,title,content, "+
-			" ctno,name,email,email_yn,phone,phone_yn,fno,writedate " +
-			" from (select qnno,mno,ono,title,content, " +
-			" ctno,name,email,email_yn,phone,phone_yn,fno,writedate "+
-			" from qna order by qnno desc) ) where rnum between #{startRow} and #{endRow}")
+	@Select("select * from qna")
 	@Result(property = "content", column = "content", jdbcType = JdbcType.CLOB, javaType = String.class)
-	List<QnaDTO> getAll(PageObject pageObject);
-	
-	@Select("select count(*) from qna")
-	int getRow(PageObject pageObject);
+	List<QnaDTO> getAll();
 	
 	@Delete("delete from qna where qnno=#{param1}")
-	int delete(int qnno);
+	int delete(@Param("mno") int qnno);
 	
-	@Update("update qna set ono=#{ono},title=#{title},content=#{content},ctno=#{ctno},email=#{email}, " +
-			" email_yn=#{email_yn},phone=#{phone},phone_yn={#phone_yn},fno=#{fno} where qnno=#{qnno}")
+	@Select("select * from qna where qnno=#{param1}")
+	QnaDTO getOne(@Param("mno") int qnno);
+	
+	@Update("update qna set ono=#{ono},title=#{title},content=#{content},ctno=#{ctno},name=#{name},email=#{email},email_yn=#{email_yn}, "
+			+ "phone=#{phone},phone_yn=#{phone_yn},fno=#{fno} where qnno=#{qnno} ")
 	int update(QnaDTO dto);
 	
+	
+	@Select("select o.ono,o.quantity,o.pno,p.payment,p.writedate,d.name "+
+			" from order_list o inner join " +
+			" payment p on (p.ono = o.ono) left outer join " + 
+			" product d on (o.pno = d.pno) and o.mno=#{param1}")
+	List<Order_listPaymentProductDTO> qnaOrderList(@Param("mno")int mno);
 }

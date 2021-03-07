@@ -66,4 +66,10 @@ public class AdminQuestionController {
 		questionMapper.update(dto);
 		return "redirect:/admin/question";
 	}
+	
+	@RequestMapping("/admin/questionDelete")
+	public String questionDelete(int qno) {
+		questionMapper.delete(qno);
+		return "redirect:/admin/question";
+	}
 }

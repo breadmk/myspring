@@ -50,7 +50,7 @@ public class AdminNoticeController {
 	public String addOk(NoticeDTO dto) {
 		System.out.println(dto.getType());
 		noticeMapper.insert(dto);
-		return "/back/notice/list";
+		return "redirect:/admin/notice";
 	}
 	
 	@RequestMapping("/admin/notice_update")

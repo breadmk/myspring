@@ -18,15 +18,16 @@
 	<thead class="thead-dark">
 		<tr>
 			<th>번호</th>
-			<th>카테고리 <select>
-					<option>선택</option>
-					<option>전체</option>
-					<option>회원문의</option>
-					<option>주문결제</option>
-					<option>취소/교환/반품</option>
-					<option>배송문의</option>
-					<option>쿠폰/적립금</option>
-					<option>서비스 이용 및 기타</option>
+			<th>카테고리 
+			<select onchange="if(this.value) location.href=(this.value);">
+					<option value="">선택</option>
+					<option value="/admin/question">전체</option>
+					<option value="/admin/question?ctno=217">회원문의</option>
+					<option value="/admin/question?ctno=218">주문결제</option>
+					<option value="/admin/question?ctno=219">취소/교환/반품</option>
+					<option value="/admin/question?ctno=220">배송문의</option>
+					<option value="/admin/question?ctno=221">쿠폰/적립금</option>
+					<option value="/admin/question?ctno=222">서비스 이용 및 기타</option>
 			</select>
 			</th>
 			<th>제목</th>

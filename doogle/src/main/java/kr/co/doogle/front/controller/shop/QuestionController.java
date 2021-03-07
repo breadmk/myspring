@@ -1,7 +1,5 @@
 package kr.co.doogle.front.controller.shop;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.co.doogle.dto.QnaDTO;
 import kr.co.doogle.dto.QuestionDTO;
 import kr.co.doogle.mapper.QuestionMapper;
-import net.webjjang.util.PageObject;
+import kr.co.doogle.paging.Paging;
 
 @Controller
 public class QuestionController {
@@ -20,50 +18,27 @@ public class QuestionController {
 	@Autowired
 	private QuestionMapper questionMapper;
 	
+	@Autowired
+	Paging paging;
+	
 //	자주하는 질문
 	@RequestMapping("/shop/questionList")
-	public String questionList(Model model,PageObject pageObject,HttpServletRequest request) {
-		String no = request.getParameter("no");
-		if(no==null) {
-			pageObject.setTotalRow(questionMapper.getRow(pageObject));
-			List<QuestionDTO> list = questionMapper.getAll(pageObject);
-			System.out.println(list);
-			model.addAttribute("pageObject",pageObject);
-			model.addAttribute("list",list);
-		}else if(no.equals("1")) {
-			pageObject.setTotalRow(questionMapper.getRow1(pageObject,no));
-			List<QuestionDTO> list = questionMapper.getAll_1(no,pageObject);
-			model.addAttribute("pageObject",pageObject);
-			model.addAttribute("list",list);
-		}else if(no.equals("2")) {
-			pageObject.setTotalRow(questionMapper.getRow1(pageObject,no));
-			List<QuestionDTO> list = questionMapper.getAll_1(no,pageObject);
-			model.addAttribute("pageObject",pageObject);
-			model.addAttribute("list",list);
-		}else if(no.equals("3")) {
-			pageObject.setTotalRow(questionMapper.getRow1(pageObject,no));
-			List<QuestionDTO> list = questionMapper.getAll_1(no,pageObject);
-			model.addAttribute("pageObject",pageObject);
-			model.addAttribute("list",list);
-		}else if(no.equals("4")) {
-			pageObject.setTotalRow(questionMapper.getRow1(pageObject,no));
-			List<QuestionDTO> list = questionMapper.getAll_1(no,pageObject);
-			model.addAttribute("pageObject",pageObject);
-			model.addAttribute("list",list);
-		}else if(no.equals("5")) {
-			pageObject.setTotalRow(questionMapper.getRow1(pageObject,no));
-			List<QuestionDTO> list = questionMapper.getAll_1(no,pageObject);
-			model.addAttribute("pageObject",pageObject);
-			model.addAttribute("list",list);
-		}else if(no.equals("6")) {
-			pageObject.setTotalRow(questionMapper.getRow1(pageObject,no));
-			List<QuestionDTO> list = questionMapper.getAll_1(no,pageObject);
-			model.addAttribute("pageObject",pageObject);
-			model.addAttribute("list",list);
+	public String questionList(Model model,HttpServletRequest request,QuestionDTO dto) {
+		int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+		if(dto.getCtno() == null ) {
+			paging.setPaging(page, questionMapper.getTotal(null,null), "/shop/questionList");
+			model.addAttribute("list",questionMapper.getAll2(paging.getStartRow(),paging.getViewCnt(),null,null));
+		}else {
+			paging.setPaging(page, questionMapper.getTotal("where ctno =#{ctno}",dto.getCtno()), "/shop/questionList?ctno="+dto.getCtno());
+			model.addAttribute("list",questionMapper.getAll2(paging.getStartRow(), paging.getViewCnt(), "where ctno = #{ctno}", dto.getCtno()));
 		}
-		
+		model.addAttribute("idx", paging.getStartRow());
+		model.addAttribute("ctno",dto.getCtno() != null ? dto.getCtno(): null);
+		model.addAttribute("url","/shop/questionList");
+		model.addAttribute("paging",paging.getPageHtml());
 		return "/front/shop/question/questionList";
 	}
+	
 //  질문지 작성-1
 	@RequestMapping("/shop/questionRegister")
 	public String questionRegister(QnaDTO dto,Model model) {
