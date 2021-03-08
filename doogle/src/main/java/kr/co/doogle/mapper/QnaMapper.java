@@ -1,6 +1,7 @@
 package kr.co.doogle.mapper;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -14,6 +15,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import kr.co.doogle.dto.Order_listPaymentProductDTO;
 import kr.co.doogle.dto.QnaDTO;
+import kr.co.doogle.dto.Qna_AnswerDTO;
 
 @Mapper
 public interface QnaMapper {
@@ -23,7 +25,7 @@ public interface QnaMapper {
 			" #{dto.name},#{dto.email},#{dto.email_yn},#{dto.phone},#{dto.phone_yn},#{dto.fno},sysdate)")
 	int insert(@Param("dto") QnaDTO dto);
 	
-	@Select("select * from qna")
+	@Select("SELECT qnno, title, content, ctno,name,writedate, (SELECT COUNT(*) AS cnt FROM qna_answer qa WHERE qa.qnno = qna.qnno) count FROM qna")
 	@Result(property = "content", column = "content", jdbcType = JdbcType.CLOB, javaType = String.class)
 	List<QnaDTO> getAll();
 	
@@ -43,4 +45,16 @@ public interface QnaMapper {
 			" payment p on (p.ono = o.ono) left outer join " + 
 			" product d on (o.pno = d.pno) and o.mno=#{param1}")
 	List<Order_listPaymentProductDTO> qnaOrderList(@Param("mno")int mno);
+	
+	@Select("select * from qna_answer")
+	@Result(property = "content", column = "content", jdbcType = JdbcType.CLOB, javaType = String.class)
+	List<Qna_AnswerDTO> answerGetAll();
+	
+	@Select("select content from qna_answer where qnno=#{param1}")
+	@Result(property = "content", column = "content", jdbcType = JdbcType.CLOB, javaType = String.class)
+	String getContent(@Param("qnno") int qnno);
+	
+	@Select("select count(*) from qna_answer where qnno=#{param1}")
+	int getCount(@Param("qnno") int qnno);
+	
 }

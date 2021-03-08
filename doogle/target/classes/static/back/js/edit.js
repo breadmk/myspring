@@ -16,4 +16,7 @@ const initEdit = (option = editOption) => {
 	$('#summernote').summernote(option);
 };
 
+const initEdit2 = (option = editOption) => {
+	$('#summernote2').summernote(option);
+};
 //initEdit();

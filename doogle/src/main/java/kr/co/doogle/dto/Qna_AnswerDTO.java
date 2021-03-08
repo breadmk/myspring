@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class QnaDTO {
-	
-	private int qnno,mno,ono,count;
-	private Integer ctno;
-	private String title,content,name,email,email_yn,phone,phone_yn,fno,writedate;
-	
+public class Qna_AnswerDTO {
+
+	private int qano,qnno;
+	private String name,content,writedate;
 }

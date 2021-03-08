@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%--     <%@include file="../navbar.jsp"%> --%>
 <style>
 .xans-board-listheader {
@@ -350,6 +351,10 @@
 	line-height: 28px;
 	font-size: 12px;
 }
+
+.titleFonts{
+	font-size: 3px;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -369,12 +374,9 @@
 					<th width="12%">작성자</th>
 					<th width="12%">작성일</th>
 				</tr>
-				<c:forEach var="list" items="${list}">
+				<c:forEach var="list" items="${list}" varStatus="status">
 					<tr class="qna">
-						<td class="td1">
-							<%-- <input type="hidden" value="${list.qnno}" class="td1"> --%>
-							${list.qnno}
-					</td>
+					<td class="td1">${list.qnno}</td>
 					<td id="td3">
 								<c:if test="${list.ctno==243}">
 								배송/지연불만
@@ -410,7 +412,7 @@
 								기타문의
 								</c:if>
 					</td>
-					<td>${list.title}</td>
+					<td>${list.title}[${list.count}]</td>
 					<td>${list.name}</td>
 					<td><fmt:parseDate value="${list.writedate}" var="writedate"
 							pattern="yyyy-MM-dd" /> <fmt:formatDate value="${writedate}"
@@ -420,7 +422,7 @@
 						<td colspan="5">[ 주문번호 ${list.ono} 문의 ]<p>
 							${list.content}
 		--------------------------------------------------------- 문의 답변 안내 ---------------------------------------------------------<p>
-		
+							<span class="ajax"></span><p>
 							<button class="update">수정</button>
 							<button class="delete">삭제</button> <input type="hidden"
 							value="${list.qnno}">

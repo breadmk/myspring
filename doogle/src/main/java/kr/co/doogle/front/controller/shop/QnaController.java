@@ -1,6 +1,10 @@
 package kr.co.doogle.front.controller.shop;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.doogle.dto.Order_listPaymentProductDTO;
 import kr.co.doogle.dto.QnaDTO;
+import kr.co.doogle.dto.Qna_AnswerDTO;
 import kr.co.doogle.mapper.QnaMapper;
 
 @Controller
@@ -22,8 +27,25 @@ public class QnaController {
 	public String qna(Model model) {
 		List<QnaDTO> list = qnaMapper.getAll();
 		model.addAttribute("list",list);
+		System.out.println(list);
 		return "/front/shop/qna/qna";
 	}
+	
+	@RequestMapping("/shop/qnaContent")
+	public void qnaContent(Model model,HttpServletRequest request,PrintWriter out) {
+		int qnno = Integer.parseInt(request.getParameter("qnno"));
+		String content = qnaMapper.getContent(qnno);
+		out.print(content);
+	}
+	
+	@RequestMapping("/shop/qnaCount")
+	public void qnaCount(Model model,HttpServletRequest request,PrintWriter out) {
+		int qnno = Integer.parseInt(request.getParameter("qnno"));
+		int count = qnaMapper.getCount(qnno);
+		System.out.println(count);
+		out.print(count);
+	}
+	
 	@RequestMapping("/shop/qna_register")
 	public String qna_register(Model model) {
 		model.addAttribute("edit","edit");
