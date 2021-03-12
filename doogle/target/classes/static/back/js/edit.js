@@ -16,4 +16,8 @@ const initEdit = (option = editOption) => {
 	$('#summernote').summernote(option);
 };
 
+const initEditDisable = (option = editOption) => {
+	$('#summernote').summernote('disable');
+};
+
 //initEdit();

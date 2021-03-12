@@ -14,43 +14,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.doogle.dto.DeliveryDTO;
 import kr.co.doogle.mapper.DeliveryMapper;
+import kr.co.doogle.mapper.MemberMapper;
 
 @Controller
 public class DeliveryController {
 	@Autowired
-	DeliveryMapper deliveryMapper;
+	private DeliveryMapper deliveryMapper;
+	
+	@Autowired
+	private MemberMapper memberMapper;
 	
 	@RequestMapping("/shop/deliveryList")
 	public String deliveryList(Model model) {
-//		DeliveryMemberDTO dto = deliveryMapper.get_one("mk");
-//		int mno = dto.getMno();
-//		System.out.println(mno);
-//		model.addAttribute("dto",dto);
 //		int mno=111; //세션변수 id 값으로 구해야함
-		int mno = deliveryMapper.getId("mk");
+		int mno = memberMapper.getId("mk");
 		List<DeliveryDTO> list = deliveryMapper.getAll(mno);
 		ArrayList<String> addr = deliveryMapper.getAddr(mno);
 		ArrayList<Integer> addrlist = deliveryMapper.addrRegexp();
-//		for(int dno : addrlist) {
-//			System.out.println(dno);
-//			deliveryMapper.addrUpdate(dno);
-//		}
 		
 		ArrayList<String> teakbea = new ArrayList<String>();
-		
-//		for(String addrgubun : addr) {
-//			if(addrgubun.contains("서울")|addrgubun.contains("인천")|addrgubun.contains("경기")) {
-//				System.out.println(addr);
-//				deliveryMapper.addrUpdate(addr);
-//				addrgubun = "y";
-//				teakbea.add(addrgubun);
-//			}else {
-//				deliveryMapper.addrUpdate2(addr);
-//				addrgubun = "n";
-//				teakbea.add(addrgubun);
-//			}
-//		}
-		System.out.println(list);
 		model.addAttribute("teakbea",teakbea);
 		model.addAttribute("list",list);
 		model.addAttribute("url", "/shop/deliveryList");
@@ -59,8 +41,9 @@ public class DeliveryController {
 	
 	@RequestMapping("/delivery_pop")
 	public String delivery_pop(Model model) {
-		int mno = deliveryMapper.getId("mk");
+		int mno = memberMapper.getId("mk");
 		model.addAttribute("mno",mno);
+		model.addAttribute("url", "/delivery_pop");
 		return "/front/shop/delivery/delivery_pop";
 	}
 	
@@ -74,7 +57,10 @@ public class DeliveryController {
 	public String deliveryUpdate(HttpServletRequest request,Model model) {
 		String dno = request.getParameter("dno");
 		String addr = deliveryMapper.updateGet(dno);
+		String addr_detail = deliveryMapper.updateGet2(dno);
 		model.addAttribute("addr",addr);
+		model.addAttribute("addr_detail",addr_detail);
+		System.out.println(addr);
 		return "/front/shop/delivery/deliveryUpdate";
 	}
 	
@@ -112,7 +98,7 @@ public class DeliveryController {
 			check = Arrays.asList(arr).contains("경기");
 		out.print(check);
 		
-		int mno = deliveryMapper.getId("mk");
+		int mno = memberMapper.getId("mk");
 //		System.out.println(mno);
 		ArrayList<String> addr3 = deliveryMapper.getAddr(mno);
 		ArrayList<String> newaddr = new ArrayList<String>();

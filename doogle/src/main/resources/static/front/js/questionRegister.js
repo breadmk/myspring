@@ -6,5 +6,5 @@ $(function(){
 			$("#type").val("n");
 		}
 	});
-});
 initEdit();
+});

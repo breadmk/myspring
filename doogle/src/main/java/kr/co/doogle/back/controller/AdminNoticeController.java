@@ -20,6 +20,8 @@ public class AdminNoticeController {
 	@Autowired
 	Paging paging;
 	
+	
+	// 공지사항 전체 조회
 	@RequestMapping("/admin/notice")
 	public String notice(Model model,HttpServletRequest request,NoticeDTO dto) {
 		int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
@@ -39,6 +41,7 @@ public class AdminNoticeController {
 		return "/back/notice/list";
 	}
 
+	// 공지사항 추가
 	@RequestMapping("/admin/notice/add")
 	public String add(Model model) {
 		model.addAttribute("edit","edit");
@@ -46,22 +49,25 @@ public class AdminNoticeController {
 		return "/back/notice/add";
 	}
 	
+	// 공지사항 추가-2
 	@RequestMapping("/admin/notice/add/ok")
 	public String addOk(NoticeDTO dto) {
 		System.out.println(dto.getType());
 		noticeMapper.insert(dto);
-		return "/back/notice/list";
+		return "redirect:/admin/notice";
 	}
 	
+	// 공지사항 수정
 	@RequestMapping("/admin/notice_update")
 	public String notice_update(Model model,int no) {
 		NoticeDTO dto = noticeMapper.getOne(no);
 		model.addAttribute("dto",dto);
 		model.addAttribute("edit","edit");
-		model.addAttribute("url","/notice_update");
+		model.addAttribute("url","/admin/notice_update");
 		return "/back/notice/notice_update";
 	}
 	
+	//공지사항 수정-2
 	@RequestMapping("/admin/notice_updateOk")
 	public String notice_updateOk(NoticeDTO dto) {
 		System.out.println(dto);
@@ -69,6 +75,7 @@ public class AdminNoticeController {
 		return "redirect:/admin/notice";
 	}
 	
+	// 공지사항 조회
 	@RequestMapping("/admin/notice_view")
 	public String notice_view(Model model,int no) {
 		NoticeDTO dto = noticeMapper.getOne(no);
@@ -78,6 +85,7 @@ public class AdminNoticeController {
 		return "/back/notice/notice_view";
 	}
 	
+	// 공지사항 삭제
 	@RequestMapping("/admin/notice_delete")
 	public String notice_delete(int no) {
 		noticeMapper.delete(no);

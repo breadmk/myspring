@@ -1,30 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<style>
-#qnasection{
-	width:1100px;
-	height:700px;
-	margin: auto;
-	}
-table{
-	text-align: center;
-	width: 700px;
-    margin-left:auto; 
-    margin-right:auto;
-}
-table input{
-	margin-top: 10px;
-	padding: 10px;
-}
-table textarea{
-	margin-top: 10px;
-	padding: 10px;
-	margin-bottom: 10px;
-}
-h2{
-	text-align: center;
-}
-</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

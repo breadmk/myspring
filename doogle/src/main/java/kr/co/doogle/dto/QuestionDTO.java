@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QuestionDTO {
 	
-	private int qno,ctno;
+	private int qno;
+	private Integer ctno;
 	private String title,content,type,writedate;
 	
 	

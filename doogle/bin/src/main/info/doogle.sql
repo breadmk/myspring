@@ -78,11 +78,6 @@ ALTER TABLE bulk_order
 		CONSTRAINT bulk_order_type_c
 		CASCADE;
 
-ALTER TABLE payment
-	DROP
-		CONSTRAINT payment_type_c
-		CASCADE;
-
 ALTER TABLE popup
 	DROP
 		CONSTRAINT popup_type_c
@@ -284,6 +279,12 @@ ALTER TABLE files
 		CASCADE
 		KEEP INDEX;
 
+ALTER TABLE qna_answer
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
 DROP INDEX member_mno_i;
 
 DROP INDEX product_pno_i;
@@ -345,6 +346,8 @@ DROP INDEX recommend_rcno_i;
 DROP INDEX question_qno_i;
 
 DROP INDEX files_fno_i;
+
+DROP INDEX qna_answer_qano_p;
 
 /* 회원 (이승준) */
 DROP TABLE member 
@@ -470,6 +473,10 @@ DROP TABLE question
 DROP TABLE files 
 	CASCADE CONSTRAINTS;
 
+/* 1:1문의답변 */
+DROP TABLE qna_answer 
+	CASCADE CONSTRAINTS;
+
 /* 장바구니 */
 DROP SEQUENCE s_basket;
 
@@ -563,6 +570,9 @@ DROP SEQUENCE s_category;
 /* 상품후기 */
 DROP SEQUENCE s_review;
 
+/* 1:1문의답변 */
+DROP SEQUENCE s_qna_answer;
+
 /* 장바구니 */
 CREATE SEQUENCE s_basket;
 
@@ -655,6 +665,9 @@ CREATE SEQUENCE s_category;
 
 /* 상품후기 */
 CREATE SEQUENCE s_review;
+
+/* 1:1문의답변 */
+CREATE SEQUENCE s_qna_answer;
 
 /* 회원 (이승준) */
 CREATE TABLE member (
@@ -890,7 +903,7 @@ ALTER TABLE category
 ALTER TABLE category
 	ADD
 		CONSTRAINT category_type_c
-		CHECK (type in ('p','o','q','t','f','e','c','d'));
+		CHECK (type in ('p','o','q','t','f','e','c','d','r'));
 
 /* 주문(헨리) */
 CREATE TABLE orders (
@@ -1186,6 +1199,7 @@ CREATE TABLE notice (
 	name VARCHAR2(30) DEFAULT '관리자' NOT NULL, /* 작성자 */
 	read_cnt NUMBER DEFAULT 0 NOT NULL, /* 조회수 */
 	type CHAR(1) DEFAULT 'y' NOT NULL, /* 노출여부 */
+	state NUMBER DEFAULT 0 NOT NULL, /* 상태 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
 );
 
@@ -1202,6 +1216,8 @@ COMMENT ON COLUMN notice.name IS '작성자';
 COMMENT ON COLUMN notice.read_cnt IS '조회수';
 
 COMMENT ON COLUMN notice.type IS '노출여부';
+
+COMMENT ON COLUMN notice.state IS '상태';
 
 COMMENT ON COLUMN notice.writedate IS '등록일';
 
@@ -1372,7 +1388,7 @@ CREATE TABLE eco (
 	title VARCHAR2(500) NOT NULL, /* 제목 */
 	content CLOB NOT NULL, /* 내용 */
 	ctno NUMBER NOT NULL, /* 카테고리번호 */
-	pname VARCHAR2(500) NOT NULL, /* 상품명 */
+	name VARCHAR2(500) NOT NULL, /* 상품명 */
 	fno VARCHAR2(100), /* 파일번호 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
 );
@@ -1387,7 +1403,7 @@ COMMENT ON COLUMN eco.content IS '내용';
 
 COMMENT ON COLUMN eco.ctno IS '카테고리번호';
 
-COMMENT ON COLUMN eco.pname IS '상품명';
+COMMENT ON COLUMN eco.name IS '상품명';
 
 COMMENT ON COLUMN eco.fno IS '파일번호';
 
@@ -1625,11 +1641,6 @@ ALTER TABLE payment
 			ono
 		);
 
-ALTER TABLE payment
-	ADD
-		CONSTRAINT payment_type_c
-		CHECK (type in ('c','b','p','m'));
-
 /* 팝업(진우람) */
 CREATE TABLE popup (
 	puno NUMBER NOT NULL, /* 팝업번호 */
@@ -1691,6 +1702,7 @@ CREATE TABLE recipe (
 	rno NUMBER NOT NULL, /* 레시피번호 */
 	title VARCHAR2(500) NOT NULL, /* 제목 */
 	content CLOB NOT NULL, /* 내용 */
+	ctno NUMBER NOT NULL, /* 카테고리 */
 	fno NUMBER NOT NULL, /* 이미지 */
 	name VARCHAR2(30) NOT NULL, /* 작성자 */
 	read_cnt NUMBER DEFAULT 0 NOT NULL, /* 조회수 */
@@ -1704,6 +1716,8 @@ COMMENT ON COLUMN recipe.rno IS '레시피번호';
 COMMENT ON COLUMN recipe.title IS '제목';
 
 COMMENT ON COLUMN recipe.content IS '내용';
+
+COMMENT ON COLUMN recipe.ctno IS '카테고리';
 
 COMMENT ON COLUMN recipe.fno IS '이미지';
 
@@ -1847,8 +1861,9 @@ CREATE TABLE saving_list (
 	svlno NUMBER NOT NULL, /* 적립금내역번호 */
 	svno NUMBER NOT NULL, /* 적립금번호 */
 	mno NUMBER NOT NULL, /* 회원번호 */
+	olno NUMBER NOT NULL, /* 주문목록번호 */
 	credit NUMBER DEFAULT 0 NOT NULL, /* 금액 */
-	expiry DATE DEFAULT sysdate NOT NULL, /* 유효기간 */
+	expiry DATE DEFAULT add_months(sysdate, +1) NOT NULL, /* 유효기간 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
 );
 
@@ -1859,6 +1874,8 @@ COMMENT ON COLUMN saving_list.svlno IS '적립금내역번호';
 COMMENT ON COLUMN saving_list.svno IS '적립금번호';
 
 COMMENT ON COLUMN saving_list.mno IS '회원번호';
+
+COMMENT ON COLUMN saving_list.olno IS '주문목록번호';
 
 COMMENT ON COLUMN saving_list.credit IS '금액';
 
@@ -1888,6 +1905,7 @@ CREATE TABLE order_list (
 	mno NUMBER NOT NULL, /* 회원번호 */
 	ono NUMBER NOT NULL, /* 주문번호 */
 	pno NUMBER NOT NULL, /* 상품번호 */
+	pono NUMBER, /* 상품옵션번호 */
 	type CHAR(1) DEFAULT 'd' NOT NULL, /* 상태 */
 	quantity NUMBER DEFAULT 0 NOT NULL, /* 수량 */
 	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
@@ -1902,6 +1920,8 @@ COMMENT ON COLUMN order_list.mno IS '회원번호';
 COMMENT ON COLUMN order_list.ono IS '주문번호';
 
 COMMENT ON COLUMN order_list.pno IS '상품번호';
+
+COMMENT ON COLUMN order_list.pono IS '상품옵션번호';
 
 COMMENT ON COLUMN order_list.type IS '상태';
 
@@ -2038,4 +2058,37 @@ ALTER TABLE files
 		CONSTRAINT files_fno_p
 		PRIMARY KEY (
 			fno
+		);
+
+/* 1:1문의답변 */
+CREATE TABLE qna_answer (
+	qano NUMBER NOT NULL, /* 1:1답변번호 */
+	qnno NUMBER NOT NULL, /* 1:1문의번호 */
+	name VARCHAR2(30) NOT NULL, /* 이름 */
+	content CLOB NOT NULL, /* 내용 */
+	writedate DATE DEFAULT sysdate NOT NULL /* 등록일 */
+);
+
+COMMENT ON TABLE qna_answer IS '1:1문의답변';
+
+COMMENT ON COLUMN qna_answer.qano IS '1:1답변번호';
+
+COMMENT ON COLUMN qna_answer.qnno IS '1:1문의번호';
+
+COMMENT ON COLUMN qna_answer.name IS '이름';
+
+COMMENT ON COLUMN qna_answer.content IS '내용';
+
+COMMENT ON COLUMN qna_answer.writedate IS '등록일';
+
+CREATE UNIQUE INDEX qna_answer_qano_p
+	ON qna_answer (
+		qano ASC
+	);
+
+ALTER TABLE qna_answer
+	ADD
+		CONSTRAINT qna_answer_qano_p
+		PRIMARY KEY (
+			qano
 		);

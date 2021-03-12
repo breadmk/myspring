@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QnaDTO {
 	
-	private int qnno,mno,ono,ctno;
+	private int qnno,mno,ono,count;
+	private Integer ctno;
 	private String title,content,name,email,email_yn,phone,phone_yn,fno,writedate;
 	
 }

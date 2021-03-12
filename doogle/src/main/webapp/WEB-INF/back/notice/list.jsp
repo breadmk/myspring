@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <input type="hidden" id="active" value="20" />
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="/static/back/js/notice.js"></script>
 <div class="w3-white w3-padding notranslate fix mt-3">
 	<h3>공지관리</h3>
 </div>
@@ -21,7 +19,7 @@
 	</thead>
 	<tbody>
 		<c:forEach items="${list}" var="list">
-			<tr class="viewRow">
+			<tr>
 				<c:if test="${list.state==1}">
 					<td>공지</td>
 				<input type="hidden" value="${list.nno}" class="nnum">
@@ -30,14 +28,16 @@
 				<input type="hidden" value="${list.nno}" class="nnum">
 					<td class="NNo">${list.nno}</td>
 				</c:if>
-				<td>${list.title}</td>
+				<td class="viewRow">${list.title}</td>
 				<td>${list.name}</td>
 				<td><fmt:parseDate value="${list.writedate}" var="writedate"
 						pattern="yyyy-MM-dd" /> <fmt:formatDate value="${writedate}"
 						pattern="yyyy-MM-dd" /></td>
 				<td>${list.read_cnt}</td>
-				<td><a href="/admin/notice_update?no=${list.nno}">수정</a> / <a
-					href="/admin/notice_delete?no=${list.nno}" class="delete">삭제</a></td>
+				<td>
+					<button class="btn btn-success update">수정</button>
+					<button class="btn btn-danger delete">삭제</button>
+			</td>
 			</tr>
 		</c:forEach>
 	</tbody>
